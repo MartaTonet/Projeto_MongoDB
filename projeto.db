@@ -1,0 +1,74 @@
+
+const collection = 'filmes';
+
+//criando collection
+
+db.createCollection(collection);
+
+//inserindo dados na collection
+
+db.filmes.insertMany([
+  {nome:"Duna", diretor:"Denis Villeuneve", elenco:"Timothée Chalamet, Rebecca Ferguson, Zendaya", ano:"2021", premios:"0"},
+
+  {nome:"Central do Brasil", diretor:"Walter Salles", elenco:"Fernanda Montenegro, Vinicius de Oliveira", ano:"1998", premios:"20"},
+
+  {nome:"Cidade dos Sonhos", diretor:"David Lynch", elenco:"Naomi Watts, Laura Elena Harring", ano:"2001", premios:"18"},
+
+  {nome:"King Kong", diretor:"Peter Jackson", elenco:"Naomi Watts, Jack Black, Adrien Brody", ano:"2005", premios:"10"},
+
+  {nome:"Bela Vingança", diretor:"Emerald Fennel", elenco:"Carey Mulligan, Bo Burnham", ano:"2020", premios:"22"},
+
+  {nome:"SDA: A Sociedade do Anel", diretor:"Peter Jackson", elenco:"Elijah Wood, Ian McKellen, Liv Tyler", ano:"2001", premios:"15"},
+
+  {nome:"Shrek", diretor:"Andrew Adamson Vicky Jenson", elenco:"Mike Myers, Eddie Murphy, Cameron Diaz", ano:"2001", premios:"10"},
+
+  {nome:"Cidade de Deus", diretor:"Fernando Meirelles, Kátia Luind", elenco:"Alexandre Rodrigues, Leandro Firmino da Hora", ano:"2002", premios:"15"},
+
+  {nome:"Pânico", diretor:"Wes Craven", elenco:"Neve Campbell, Courtney Cox, David Arquette", ano:"1996", premios:"6"},
+
+
+
+])
+
+//mostrar todos os dados da collection
+db.filmes.find().pretty()
+
+// Consultando filmes lançados entre 1997 e 2004
+
+
+db.filmes.find(
+  {
+    ano:{
+      $gte:"1997",
+      $lte:"2010"
+    }
+    })
+
+ //Consultar filmes de 2001 ou que comecem com a letra D.
+db.filmes.find(
+  {
+    $or: [
+      {ano:"2001"},
+      {nome: /^D/}
+      ]
+  }
+)
+
+//Consultar filmes lançados dirigidos pelo Peter Jackson ou pelo Walter Salles usando $in.
+
+db.filmes.find(
+  {
+    diretor:{
+      $in:["Peter Jackson", "Walter Salles"]
+      }
+  })
+
+  //Consultar filmes lançados entre 2002 e 2021 e que contenham as atrizes Naomi Watts ou Carey Mulligan.
+
+
+
+
+
+
+
+
