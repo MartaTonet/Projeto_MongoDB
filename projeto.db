@@ -98,4 +98,59 @@ db.filmes.find({
 //Selecione apenas o elenco numa distinct.
 
 
+db.filmes.distinct("elenco")
+
+//Selecionar os filmes lançados em 2001, apresentando seu nome e diretor apenas, em ordem decrescente, limitando a dois resultados.
+
+db.filmes.find({},{ano:"2001",diretor:1, nome:1}).limit(2).sort({nome:-1})
+
+
+// Crie uma index usando o ano como referência.
+//Index com nome
+
+db.filmes.createIndex({ano:2},{name:"Todos os anos dos filmes"})
+
+//Mostrando o index criado
+
+db.filmes.getIndexes()
+
+//Eliminar todos Indexes
+
+db.filmes.dropIndexes()
+
+//Eliminar index individual
+
+db.filmes.dropIndex({ano:1})
+
+//Somar os prêmios de todos os filmes.
+
+
+
+
+
+
+
+
+
+ //Na coleção `sample_mflix` do Mongo Atlas DB, crie uma consulta que retorne os filmes com os seus comentários utilizando o estágio de agrupamento (e.g.: `$lookup`).
+
+  use("sample_mflix")
+
+db.movies.aggregate([
+  {
+    $lookup: {
+      from:'comments',
+      localField: 'title',
+      foreignField: 'text',
+      as: 'Filmes'
+    }
+  }
+])
+
+use("sample_mflix")
+db.comments.find()
+
+
+use("sample_mflix")
+db.movies.find()
 
