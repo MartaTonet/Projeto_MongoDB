@@ -8,24 +8,25 @@ db.createCollection(collection);
 //inserindo dados na collection
 
 db.filmes.insertMany([
-  {nome:"Duna", diretor:"Denis Villeuneve", elenco:["Timothée Chalamet", "Rebecca Ferguson", "Zendaya"], ano:"2021", premios:"0"},
+  {nome:"Duna", diretor:"Denis Villeuneve", elenco:["Timothée Chalamet", "Rebecca Ferguson", "Zendaya"], ano:"2021", premios: 0},
 
-  {nome:"Central do Brasil", diretor:"Walter Salles", elenco:["Fernanda Montenegro", "Vinicius de Oliveira"], ano:"1998", premios:"20"},
+  {nome:"Central do Brasil", diretor:"Walter Salles", elenco:["Fernanda Montenegro", "Vinicius de Oliveira"], ano:"1998", premios: 20},
 
-  {nome:"Cidade dos Sonhos", diretor:"David Lynch", elenco:["Naomi Watts", "Laura Elena Harring"], ano:"2001", premios:"18"},
+  {nome:"Cidade dos Sonhos", diretor:"David Lynch", elenco:["Naomi Watts", "Laura Elena Harring"], ano:"2001", premios: 18},
 
-  {nome:"King Kong", diretor:"Peter Jackson", elenco:["Naomi Watts", "Jack Black", "Adrien Brody"], ano:"2005", premios:"10"},
+  {nome:"King Kong", diretor:"Peter Jackson", elenco:["Naomi Watts", "Jack Black", "Adrien Brody"], ano:"2005", premios: 10},
 
-  {nome:"Bela Vingança", diretor:"Emerald Fennel", elenco:["Carey Mulligan", "Bo Burnham"], ano:"2020", premios:"22"},
+  {nome:"Bela Vingança", diretor:"Emerald Fennel", elenco:["Carey Mulligan", "Bo Burnham"], ano:"2020", premios: 22},
 
-  {nome:"SDA: A Sociedade do Anel", diretor:"Peter Jackson", elenco:["Elijah Wood", "Ian McKellen, Liv Tyler"], ano:"2001", premios:"15"},
+  {nome:"SDA: A Sociedade do Anel", diretor:"Peter Jackson", elenco:["Elijah Wood", "Ian McKellen, Liv Tyler"], ano:"2001", premios: 15},
 
-  {nome:"Shrek", diretor:"Andrew Adamson Vicky Jenson", elenco:["Mike Myers", "Eddie Murphy", "Cameron Diaz"], ano:"2001", premios:"10"},
+  {nome:"Shrek", diretor:"Andrew Adamson Vicky Jenson", elenco:["Mike Myers", "Eddie Murphy", "Cameron Diaz"], ano:"2001", premios: 10},
 
-  {nome:"Cidade de Deus", diretor:["Fernando Meirelles", "Kátia Luind"], elenco:["Alexandre Rodrigues", "Leandro Firmino da Hora"], ano:"2002", premios:"15"},
+  {nome:"Cidade de Deus", diretor:["Fernando Meirelles", "Kátia Luind"], elenco:["Alexandre Rodrigues", "Leandro Firmino da Hora"], ano:"2002", premios: 15},
 
-  {nome:"Pânico", diretor:"Wes Craven", elenco:["Neve Campbell", "Courtney Cox", "David Arquette"], ano:"1996", premios:"6"}
+  {nome:"Pânico", diretor:"Wes Craven", elenco:["Neve Campbell", "Courtney Cox", "David Arquette"], ano:"1996", premios: 6}
 ])
+
 
 //mostrar todos os dados da collection
   db.filmes.find().pretty()
@@ -122,28 +123,30 @@ db.filmes.dropIndexes()
 
 db.filmes.dropIndex({ano:1})
 
+
 //Somar os prêmios de todos os filmes.
 
-
-
-
-
-
+db.filmes.aggregate([
+    {
+        $group: {_id:"",premios:{$sum:"$premios"}
+        }},
+    {
+        $project: {"total de Premios":"$premios"}
+        }
+])
 
 
 
  //Na coleção `sample_mflix` do Mongo Atlas DB, crie uma consulta que retorne os filmes com os seus comentários utilizando o estágio de agrupamento (e.g.: `$lookup`).
 
-  use("sample_mflix")
-
-db.movies.aggregate([
+use("sample_mflix")
+db.comments.aggregate([
+  {$lookup:
   {
-    $lookup: {
-      from:'comments',
-      localField: 'title',
-      foreignField: 'text',
-      as: 'Filmes'
-    }
+    from:"movies",
+    localField:"movie_id",
+    foreignField:"_id",
+    as:"Filmes"}
   }
 ])
 
